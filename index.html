@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Animation</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #e8f1f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  header h1 {
+    font-size: 3rem;
+    color: #66fcf1;
+  }
+
+  header p {
+    font-size: 1.2rem;
+    color: #c5c6c7;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    width: 90%;
+    max-width: 1000px;
+    margin-top: 30px;
+  }
+
+  .left, .right {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2);
+  }
+
+  .box {
+    background-color: rgba(255, 255, 255, 0.07);
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+
+  .box:hover {
+    transform: scale(1.03);
+  }
+
+  .box h3 {
+    color: #66fcf1;
+    margin-bottom: 10px;
+  }
+
+  .date-info p {
+    margin: 5px 0;
+  }
+
+  .animated-links {
+    display: grid;
+    gap: 15px;
+  }
+
+  .link-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .link-box:hover {
+    background: #45a29e;
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px #45a29e;
+  }
+
+  .link-box a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Web Animation</h1>
+  <p>Welcome, See if you can REPLICATE?</p>
+</header>
+
+<div class="container">
+  <div class="left">
+    <div class="box">
+      <h3>Code Editor</h3>
+      <p>Visual Studio Code</p>
+    </div>
+    <div class="box date-info">
+      <h3>Date</h3>
+      <p>📍 Location: Shima 109</p>
+      <p>📅 October 20, 2025</p>
+    </div>
+    <div class="box">
+      <h3>Animate</h3>
+      <p>Learn CSS transitions and JavaScript animations!</p>
+    </div>
+  </div>
+
+  <div class="right">
+    <h2>Animated Links</h2>
+    <div class="animated-links">
+      <div class="link-box">
+        <span>Link 1 – GitHub</span><br>
+        <a href="https://github.com/" target="_blank">Visit Github.com!</a>
+      </div>
+      <div class="link-box">
+        <span>Link 2 – CodePen</span><br>
+        <a href="https://codepen.io/" target="_blank">Visit CodePen.io!</a>
+      </div>
+      <div class="link-box">
+        <span>No Link – W3Schools</span><br>
+        <a href="https://www.w3schools.com/" target="_blank">Visit W3Schools!</a>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 30px;">Code in Motion</h2>
+    <canvas id="particleCanvas"></canvas>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 200;
+
+  let particles = [];
+  for (let i = 0; i < 50; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 3 + 1,
+      dx: (Math.random() - 0.5) * 2,
+      dy: (Math.random() - 0.5) * 2,
+      color: '#66fcf1'
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+
+      p.x += p.dx;
+      p.y += p.dy;
+
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+</script>
+
+</body>
+</html>
